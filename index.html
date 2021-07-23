@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>にゃんとなく幸せ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="2番レジ締めの支援サービスです。">
+<!-- <meta name="keywords" content="キーワード１,キーワード２,キーワード３,キーワード４,キーワード５"> -->
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/fixmenu_pagetop.css">
+<script type="text/javascript" src="js/openclose.js"></script>
+<script type="text/javascript" src="js/fixmenu_pagetop.js"></script>
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+$(function(){
+$('a[href^="#"]').click(function() {
+var speed = 800;
+var href= $(this).attr("href");
+var target = $(href == "#" || href == "" ? 'html' : href);
+var position = target.offset().top;
+$('body,html').animate({scrollTop:position}, speed, 'swing');
+return false;
+});
+});
+function keisan(){
+  var tth = parseInt(document.before.tth.value);
+  document.before.stth.value = 10000*tth;
+  var fth = parseInt(document.before.fth.value);
+  document.before.sfth.value = 5000*fth;
+  var wth = parseInt(document.before.wth.value);
+  document.before.swth.value = 2000*wth;
+  var oth = parseInt(document.before.oth.value);
+  document.before.soth.value = 1000*oth;
+  var fh = parseInt(document.before.fh.value);
+  document.before.sfh.value = 500*fh;
+  var oh = parseInt(document.before.oh.value);
+  document.before.soh.value = 100*oh;
+  var ft = parseInt(document.before.ft.value);
+  document.before.sft.value = 50*ft;
+  var t = parseInt(document.before.t.value);
+  document.before.st.value = 10*t;
+  var f = parseInt(document.before.f.value);
+  document.before.sf.value = 5*f;
+  var o = parseInt(document.before.o.value);
+  document.before.so.value = o;
+  document.before.total.value = 10000*tth + 5000*fth + 2000*wth+ 1000*oth + 500*fh + 100*oh + 50*ft + 10*t + 5*f + o;
+};
+function calculate() {
+  var tth = parseInt(document.before.tth.value);
+  var fth = parseInt(document.before.fth.value);
+  var wth = parseInt(document.before.wth.value);
+  var oth = parseInt(document.before.oth.value);
+  var fh = parseInt(document.before.fh.value);
+  var oh = parseInt(document.before.oh.value);
+  var ft = parseInt(document.before.ft.value);
+  var t = parseInt(document.before.t.value);
+  var f = parseInt(document.before.f.value);
+  var o = parseInt(document.before.o.value);
+  let good = [7, 25, 25, 60, 30, 60, 30, 60];
+  let great = [9, 30, 29, 75, 40, 75, 35, 75];
+  let value = [5000, 1000, 500, 100, 50, 10, 5, 1];
+  var cashier = [0, 0, 0, 0, 0, 0, 0, 0]
+  var myMoney = [fth, oth, fh, oh, ft, t, f, o];
+  for (let i=0; i<good.length; i++) {
+    if (myMoney[i] < good[i]) {
+      window.alert(`${value[i]}円（札or玉）が不足していませんか？\nもう一度ご確認ください。`);
+      return;
+    }
+    if (myMoney[i] >= great[i]) {
+      cashier[i] = great[i];
+      myMoney[i] -= great[i];
+    } else {
+      cashier[i] = myMoney[i];
+      myMoney[i] = 0;
+    }
+  }
+  var cashierSum = 0;
+  for (let i=0; i<cashier.length; i++) {
+    cashierSum += value[i] * cashier[i];
+  }
+  var surplas = 100000 - cashierSum;
+  var j = 0;
+  while (surplas > 0) {
+    if (Math.floor(surplas / value[j])) {
+      var num = Math.min(Math.floor(surplas / value[j]), myMoney[j]);
+      surplas -= value[j]*num;
+      cashier[j] += num;
+      myMoney[j] -= num;
+    }
+    j++;
+  }
+  document.after.fth.value = cashier[0]
+  document.after.sfth.value = cashier[0]*5000;
+  document.after.oth.value = cashier[1]
+  document.after.soth.value = cashier[1]*1000;
+  document.after.fh.value = cashier[2]
+  document.after.sfh.value = cashier[2]*500;
+  document.after.oh.value = cashier[3]
+  document.after.soh.value = cashier[3]*100;
+  document.after.ft.value = cashier[4]
+  document.after.sft.value = cashier[4]*50;
+  document.after.t.value = cashier[5]
+  document.after.st.value = cashier[5]*10;
+  document.after.f.value = cashier[6]
+  document.after.sf.value = cashier[6]*5;
+  document.after.o.value = cashier[7]
+  document.after.so.value = cashier[7]*1;
+  cashierSum = 0;
+  for (let i=0; i<cashier.length; i++) {
+    cashierSum += value[i] * cashier[i];
+  }
+  document.after.total.value = cashierSum;
+}
+</script>
+</head>
+
+<body>
+
+<div id="container">
+
+<div id="mainimg">メインイメージ</div>
+
+<header>
+
+<h1 id="logo"><a href="index.html"><img src="images/logo.png" alt="にゃんとなく幸せ"></a></h1>
+<!--PC用（801px以上端末）メニュー-->
+<nav id="menubar">
+<ul>
+<li id="menu1"><a href="#about"><img src="images/menu_about.png" alt="当サイトについて"></a></li>
+<li id="menu2"><a href="#gallery"><img src="images/menu_gallery.png" alt="ギャラリー"></a></li>
+<li id="menu3"><a href="#link"><img src="images/menu_link.png" alt="リンク"></a></li>
+<li id="menu4"><a href="#"><img src="images/menu_instagram.png" alt="インスタグラム"></a></li>
+</ul>
+</nav>
+
+</header>
+
+<div class="contents bg1"><!--contentsブロック開始＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+
+<section>
+
+<h2>Well done<span>お疲れ様です</span></h2>
+
+<h3>ご利用上の注意</h3>
+<p>このサービスは、あくまで2番レジ締めの『支援』サービスです。</p>
+<p>サービス利用後は、必ず複数名による二重チェックを行ってください。</p>
+<p><strong class="color1">■本サービスの計算ミスにより何らかの損害が生じた場合でも、開発者は一切の責任を負いかねますのでご了承ください。</strong><br>
+開発者自身も、レジ締めは未経験です。全て各自の責任においてご使用ください。</p>
+<h3>参考文献</h3>
+<p>・二番レジ締めマニュアル 2021/07/04 牛嶋作成</p>
+<p>計算アルゴリズムは、上記のマニュアルを参考にして開発しました。お困りの際は、再度マニュアルをご確認ください。</p>
+
+</section>
+
+<section id="new">
+
+<h2>What' New<span>お知らせ</span></h2>
+<dl>
+<dt>2021/07/24</dt>
+<dd>サービスを公開しました。<span class="newicon">NEW</span></dd>
+<dt>2021/07/23</dt>
+<dd>開発がスタートしました。</dd>
+</dl>
+<p class="r">&raquo;&nbsp;<a href="#">過去ログ</a></p>
+
+</section>
+
+</div>
+<!--/contents-->
+
+<div class="contents bg2" id="about"><!--contentsブロック開始＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+
+<section>
+
+<h2>About<span>当サービスについて</span></h2>
+
+<h3>当サービスの使い方</h3>
+<p>① 上(Before)の表に、レジ金残高の金種を入力する</p>
+<p>② 『にゃんとなく計算』ボタンを押す</p>
+<p>③ 下(After)の表に、最終的なレジ金残高の金種が表示される</p>
+
+<h3>サービスに関するお問い合わせ</h3>
+<p><a href="#">Googleフォーム</a> のリンクにアクセスして、お問い合わせ事項を記入してください。「もっとこう計算して欲しい」等のリクエストもお待ちしております。<br>
+※ 開発者が多忙でない限り、数日以内に修正が入ります</p>
+
+</section>
+
+</div>
+<!--/contents-->
+
+<div class="contents bg3" id="gallery"><!--contentsブロック開始＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+
+<section>
+
+<h2>Calculation<span>計算してもらう</span></h2>
+<h3>Before</h3>
+<form method="post" id="before" name="before">
+<table class='ta1'>
+  <tr><th>金種</th>
+  <th>枚数</th>
+  <th>小計（自動計算）</th></tr>
+  <tr><td class="r">10,000 円</td>
+  <td class="r"><input type='text' name='tth' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='stth' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">5,000 円</td>
+  <td class="r"><input type='text' name='fth' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='sfth' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">2,000 円</td>
+  <td class="r"><input type='text' name='wth' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='swth' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">1,000 円</td>
+  <td class="r"><input type='text' name='oth' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='soth' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">500 円</td>
+  <td class="r"><input type='text' name='fh' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='sfh' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">100 円</td>
+  <td class="r"><input type='text' name='oh' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='soh' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">50 円</td>
+  <td class="r"><input type='text' name='ft' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='sft' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">10 円</td>
+  <td class="r"><input type='text' name='t' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='st' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">5 円</td>
+  <td class="r"><input type='text' name='f' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='sf' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">1 円</td>
+  <td class="r"><input type='text' name='o' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='so' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td align='center' colspan=2>合計</td>
+  <td class="r"><input type='text' name='total' value="0" style="width:60px;" disabled> 円</td></tr>
+</table>
+</form>
+<div style="text-align:center">
+<a href="#" class="btn-stitch" onclick='calculate()'>にゃんとなく計算</a>
+</div>
+<h3>After</h3>
+<form method="post" id="after" name="after">
+<table class='ta1'>
+  <tr><th>金種</th>
+  <th>枚数</th>
+  <th>小計</th></tr>
+  <!-- <tr><td class="r">10,000 円</td>
+  <td class="r"><input type='text' name='tth' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='stth' value="0" style="width:50px;" disabled> 円</td></tr> -->
+  <tr><td class="r">5,000 円</td>
+  <td class="r"><input type='text' name='fth' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='sfth' value="0" style="width:50px;" disabled> 円</td></tr>
+  <!-- <tr><td class="r">2,000 円</td>
+  <td class="r"><input type='text' name='wth' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='swth' value="0" style="width:50px;" disabled> 円</td></tr> -->
+  <tr><td class="r">1,000 円</td>
+  <td class="r"><input type='text' name='oth' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='soth' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">500 円</td>
+  <td class="r"><input type='text' name='fh' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='sfh' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">100 円</td>
+  <td class="r"><input type='text' name='oh' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='soh' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">50 円</td>
+  <td class="r"><input type='text' name='ft' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='sft' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">10 円</td>
+  <td class="r"><input type='text' name='t' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='st' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">5 円</td>
+  <td class="r"><input type='text' name='f' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='sf' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td class="r">1 円</td>
+  <td class="r"><input type='text' name='o' onChange='keisan()' value="0" style="width:20px;">枚</td>
+  <td class="r"><input type='text' name='so' value="0" style="width:50px;" disabled> 円</td></tr>
+  <tr><td align='center' colspan=2>合計</td>
+  <td class="r"><input type='text' name='total' value="0" style="width:60px;" disabled> 円</td></tr>
+</table>
+</form>
+<p><strong class="color1">■ご自身で必ずもう一度確認してください。</strong></p>
+
+</section>
+
+</div>
+<!--/contents-->
+
+<div class="contents bg4" id="link"><!--contentsブロック開始＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+
+<section>
+
+<h2>Link<span>リンク</span></h2>
+
+<table class="ta1">
+<tr>
+<th colspan="2" class="tamidashi">DOUTOR</th>
+</tr>
+<tr>
+<th><a href="https://www.doutor.co.jp/dcs/">ドトールコーヒーショップ</a></th>
+<td>ドトールコーヒーショップの公式ホームページです。</td>
+</tr>
+<tr>
+<th><a href="https://shop.doutor.co.jp/map/1011535">ドトールコーヒーショップ 仙台八幡店</a></th>
+<td></td>
+</tr>
+</table>
+
+<table class="ta1">
+<tr>
+<th colspan="2" class="tamidashi">開発者</th>
+</tr>
+<tr>
+<th><a href="#">あづまるチャンネル</a></th>
+<td>限界大学生VTuberあづまるのYouTubeチャンネルです。</td>
+</tr>
+<tr>
+<th><a href="https://qiita.com/adumaru0828">Qiita</a></th>
+<td>Python大好き大学生がプログラミング記事を投稿しています。</td>
+</tr>
+</table>
+
+</section>
+
+</div>
+<!--/contents-->
+
+<footer>
+<small>Copyright&copy; <a href="index.html">にゃんとなく幸せ</a> All Rights Reserved.</small>
+<span class="pr"><a href="http://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
+</footer>
+
+<p class="nav-fix-pos-pagetop"><a href="#">↑</a></p>
+
+</div>
+<!--/container-->
+
+</body>
+</html>
